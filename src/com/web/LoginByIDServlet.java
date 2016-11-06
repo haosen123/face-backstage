@@ -91,6 +91,7 @@ public class LoginByIDServlet extends HttpServlet {
 					//当前是个普通字段
 					String ID=item.getString();
 					User user = service.findUserByID(ID);//返回用户信息
+					String photopath = user.getPosition();//得到ID对应的图片路径
 				}else{
 					//当前是一个文件上传项
 					String filename=item.getName();
@@ -110,6 +111,9 @@ public class LoginByIDServlet extends HttpServlet {
 				    
 				    //删除临时文件
 				    item.delete();
+				    
+				    if(true)
+				    	response.getWriter().write("识别成功");
 				}
 			}
 			catch (Exception e){
