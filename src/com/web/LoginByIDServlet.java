@@ -1,4 +1,4 @@
-package com.servlet;
+package com.web;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -19,14 +19,18 @@ import org.apache.commons.fileupload.ProgressListener;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.domain.User;
+import com.service.UserService;
 import com.util.IOutil;
 
 
 
-public class UploadServlet extends HttpServlet {
+public class LoginByIDServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=utf-8");
 		try{
 			//1.创建工厂
 			DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -43,6 +47,7 @@ public class UploadServlet extends HttpServlet {
 			fileUpload.setSizeMax(1024*1024*100);//总文件不超过100M
 			//--设置编码集，解决上传文件名的乱码问题
 			fileUpload.setHeaderEncoding("utf-8");
+			//--设置监听器
 			fileUpload.setProgressListener(new ProgressListener(){
 				Long beginTime = System.currentTimeMillis();
 				public void update(long bytesRead, long contentLength, int items) {
@@ -80,12 +85,12 @@ public class UploadServlet extends HttpServlet {
 			//3.利用文件上传核心类解析request
 			List<FileItem> list = fileUpload.parseRequest(request);
 			//4.遍历所有的FileItem
+			UserService service =new UserService();
 			for(FileItem item : list)
 				if(item.isFormField()){
 					//当前是个普通字段
-					String name =item.getFieldName();
-					String value=item.getString();
-					System.out.println(name+":"+value);
+					String ID=item.getString();
+					User user = service.findUserByID(ID);//返回用户信息
 				}else{
 					//当前是一个文件上传项
 					String filename=item.getName();

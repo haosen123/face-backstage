@@ -16,6 +16,11 @@
     <servlet-name>UploadServlet</servlet-name>
     <servlet-class>com.servlet.UploadServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ReadByNum</servlet-name>
+    <servlet-class>com.servlet.ReadByNum</servlet-class>
+  </servlet>
+
 
 
 
@@ -30,6 +35,10 @@
   <servlet-mapping>
     <servlet-name>UploadServlet</servlet-name>
     <url-pattern>/servlet/doUpload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ReadByNum</servlet-name>
+    <url-pattern>/servlet/doReadByNum</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
